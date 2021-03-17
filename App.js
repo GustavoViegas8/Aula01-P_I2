@@ -1,8 +1,7 @@
 const express = require('express')
 const app = express()
-const port = 3000
 
-//Middleware que ajusta o formato dos dados do Formulario em HTML
+//Middleware que ajusta o formato dos dados do Formulario em HTML (receber dados a partir de um formulario)
 //app.use(express.urlencoded({extended: true}))
 
 //Middleware que ajusta o formato dos dados recebidos por json
@@ -24,8 +23,11 @@ app.get('/Teste02', (req, res) => {
 
 //post: inclusão de dados
 app.post('/', (req, res) => {
-  const nome = req.body.nome
-  const idade = req.body.idade
+  //const nome = req.body.nome
+  //const idade = req.body.idade
+
+  //Desctructor JavaScript
+  const {nome, idade} = req.body
 
   //res.send(`<h3>Recebido Nome: ${nome} e Idade: ${idade} com sucesso!</h3>`)
   res.json({ok: 1, msg: `Recebido ${nome} e idade ${idade} com sucesso!`})
@@ -54,6 +56,26 @@ app.get('/lista/:id?', (req, res) => {
   }
 })
 
-app.listen(port, () => {
-  console.log(`Servidor Rodando -> http://localhost:${port}`)
+//Exercício: Rota com 2 parêmetros opcionais
+app.get('/Teste03/:par1?/:par2?', (req, res) => {
+  if(req.params.par1 && req.params.par2){
+    const nome = req.params.par1;
+    const id = req.params.par2;
+    res.json({ok: 1, msg: `Pesquisa por Nome:${nome} ID:${id}`})
+
+  } else if (req.params.par1){
+    const par1 = Number(req.params.par1)
+      if(isNaN(par1)) {
+        const nome = req.params.par1
+        res.json({ok: 1, msg: `Pesquisa pelo nome: ${nome}`})
+      } else {
+        res.json({ok: 1, msg: `Pesquisa por ID: ${par1}`})
+      }
+  } else {
+    res.json({ok: 1, msg: `Pesquisa sem os parâmetros (Todos os Dados)`})
+  }
+})
+
+app.listen(3000, () => {
+  console.log(`Servidor Rodando -> http://localhost:${3000}`)
 })
