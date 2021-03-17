@@ -1,1 +1,3 @@
-Se sua intenção é alterar o código recomenda-se o pacote Nodemon para rodar o projeto mais facilmente.
+Se sua intenção é alterar o código recomenda-se o pacote 
+Nodemon para rodar o projeto mais facilmente.
+Instalação: npm install nodemon
