@@ -7,6 +7,14 @@ const app = express()
 //Middleware que ajusta o formato dos dados recebidos por json
 app.use(express.json())
 
+//MIDDLEWARE
+//Function imprime(req, res, next)
+const imprime = (req, res, next) =>{
+  console.log(`${'.'.repeat(30)} em ${new Date()}`);
+  next();
+}
+app.use(imprime)
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -40,7 +48,7 @@ app.put('/:id', (req, res) => {
 })
 
 //delete: exlusão de dados
-app.delete('/:id', (req, res) => {
+app.delete('/:id', imprime, (req, res) => {
   const id = req.params.id
   res.json({ok: 1, msg: `Aluno ${id} expurgado.`})
 })
